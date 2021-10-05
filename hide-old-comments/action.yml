@@ -1,10 +1,10 @@
 name: Hide old plans
 description: Hide old plan comments
 inputs:
-  github_org:
+  org:
     description: GitHub organization
     required: true
-  github_repo:
+  repo:
     description: GitHub repository
     required: true
   token:
