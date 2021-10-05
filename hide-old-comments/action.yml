@@ -1,0 +1,20 @@
+name: Hide old plans
+description: Hide old plan comments
+inputs:
+  github_org:
+    description: GitHub organization
+    required: true
+  github_repo:
+    description: GitHub repository
+    required: true
+  token:
+    description: GitHub token
+    required: true
+  target:
+    description: Target
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - run: github-comment hide -org ${{ inputs.org }} -repo ${{ inputs.repo }} -token ${{ inputs.token }} -condition 'Comment.HasMeta && (Comment.Meta.SHA1 != Commit.SHA1 && Comment.Meta.Vars.target == "${{ inputs.target }}")'
+      shell: bash

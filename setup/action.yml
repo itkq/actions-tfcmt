@@ -1,0 +1,22 @@
+name: Setup tfcmt
+description: Setup tfcmt and github-comment
+runs:
+  using: "composite"
+  steps:
+    - run: curl -LO https://github.com/suzuki-shunsuke/tfcmt/releases/download/v1.1.0/tfcmt_linux_amd64.tar.gz
+      shell: bash
+
+    - run: echo '221243e38f6c68c17517d8b2cbea93a2c25c1725bf4872a7da860626eb7b944f  tfcmt_linux_amd64.tar.gz' | sha256sum --check
+      shell: bash
+
+    - run: sudo tar -C /usr/bin/ -zxf tfcmt_linux_amd64.tar.gz
+      shell: bash
+
+    - run: curl -LO https://github.com/suzuki-shunsuke/github-comment/releases/download/v3.1.0/github-comment_3.1.0_linux_amd64.tar.gz
+      shell: bash
+
+    - run: echo '8d065e8cd47b8913b7fb481fbf746553929197e3eea649a5fd1e7c6b5251d3ee  github-comment_3.1.0_linux_amd64.tar.gz' | sha256sum --check
+      shell: bash
+
+    - run: sudo tar -C /usr/bin/ -zxf github-comment_3.1.0_linux_amd64.tar.gz
+      shell: bash
