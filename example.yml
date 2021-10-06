@@ -1,0 +1,42 @@
+name: terraform plan
+
+on:
+  pull_request:
+
+jobs:
+  terraform_plan:
+    name: Terraform plan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Setup tfcmt
+        uses: itkq/actions-tfcmt/setup@main
+
+      - id: fmt
+        run: terraform fmt -check
+
+      - id: init
+        run: terraform init
+
+      - id: validate
+        run: terraform validate -no-color
+
+      - id: plan
+        run: |
+          tfcmt -var 'target:foo' plan -- terraform plan
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Hide old plans
+        uses: itkq/actions-tfcmt/hide-old-comments@main
+        with:
+          org: itkq
+          repo: ${{ github.event.repository.name }}
+          pr_number: ${{ github.event.number }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          target: foo
