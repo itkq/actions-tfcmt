@@ -3,10 +3,10 @@ description: Setup tfcmt and github-comment
 runs:
   using: "composite"
   steps:
-    - run: curl -LO https://github.com/suzuki-shunsuke/tfcmt/releases/download/v2.1.0-0/tfcmt_linux_amd64.tar.gz
+    - run: curl -LO https://github.com/suzuki-shunsuke/tfcmt/releases/download/v2.1.0/tfcmt_linux_amd64.tar.gz
       shell: bash
 
-    - run: echo '5f916f5ced80df0061532e4e364eea988dc51c4977f7bfee24313c6a0b963cf4  tfcmt_linux_amd64.tar.gz' | sha256sum --check
+    - run: echo '683001cfe1713e57e0317a1e36cfc4502e434ba152b351d930a6e31e18503bc1  tfcmt_linux_amd64.tar.gz' | sha256sum --check
       shell: bash
 
     - run: sudo tar -C /usr/bin/ -zxf tfcmt_linux_amd64.tar.gz
