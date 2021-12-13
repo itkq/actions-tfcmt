@@ -15,7 +15,7 @@ jobs:
         uses: hashicorp/setup-terraform@v1
 
       - name: Setup tfcmt
-        uses: itkq/actions-tfcmt/setup@main
+        uses: itkq/actions-tfcmt/setup@v1
 
       - id: fmt
         run: terraform fmt -check
@@ -33,7 +33,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Hide old plans
-        uses: itkq/actions-tfcmt/hide-old-comments@main
+        uses: itkq/actions-tfcmt/hide-old-comments@v1
         with:
           org: itkq
           repo: ${{ github.event.repository.name }}
