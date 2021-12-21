@@ -7,6 +7,9 @@ jobs:
   terraform_plan:
     name: Terraform plan
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ci
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -17,7 +20,7 @@ jobs:
           terraform_version: 1.1.2
 
       - name: Setup tfcmt
-        uses: itkq/actions-tfcmt/setup@v1
+        uses: itkq/actions-tfcmt/setup@main
 
       - id: fmt
         run: terraform fmt -check
@@ -35,7 +38,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Hide old plans
-        uses: itkq/actions-tfcmt/hide-old-comments@v1
+        uses: itkq/actions-tfcmt/hide-old-comments@main
         with:
           org: itkq
           repo: ${{ github.event.repository.name }}
