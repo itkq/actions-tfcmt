@@ -1,0 +1,28 @@
+name: test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup tfcmt
+        uses: itkq/actions-tfcmt/setup@main
+
+      - run: tfcmt --version
+
+      - name: Hide old plans
+        uses: itkq/actions-tfcmt/hide-old-comments@main
+        with:
+          org: itkq
+          repo: ${{ github.event.repository.name }}
+          pr_number: 1
+          token: ${{ secrets.GITHUB_TOKEN }}
+          target: foo
