@@ -1,0 +1,44 @@
+#!/usr/bin/env ruby
+
+require 'net/http'
+require 'yaml'
+
+TARGET_OS_ARCH = 'linux_amd64'.freeze
+
+def retrieve_checksum(version)
+  uri_str = "https://github.com/suzuki-shunsuke/tfcmt/releases/download/v#{version}/tfcmt_#{version}_checksums.txt"
+  res = fetch(uri_str)
+  res.body.split("\n").find { |l| l.include?(TARGET_OS_ARCH) }&.split(' ')&.first
+end
+
+def fetch(uri_str, limit = 2)
+  raise 'HTTP redirect too deep' if limit == 0
+
+  url = URI(uri_str)
+  req = Net::HTTP::Get.new(url)
+  response = Net::HTTP.start(url.host, url.port, use_ssl: true) { |http| http.request(req) }
+  case response
+  when Net::HTTPSuccess
+    response
+  when Net::HTTPRedirection
+    fetch(response['location'], limit - 1)
+  else
+    p response.body
+    response.error!
+  end
+end
+
+target_version = ARGV[0]
+unless target_version
+  abort "Usage: #{$0} target_version"
+end
+
+target_checksum = retrieve_checksum(target_version)
+
+yaml_path = 'setup/action.yml'
+yaml = YAML.load_file(yaml_path)
+old_version = yaml['runs']['steps'][0]['run'].slice(%r{v([^/]+)}, 1)
+old_checksum = yaml['runs']['steps'][1]['run'].slice(%r{echo '([^ ]+)}, 1)
+
+content = File.read(yaml_path).sub(old_version, target_version).sub(old_checksum, target_checksum)
+File.write(yaml_path, content)
