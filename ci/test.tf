@@ -7,6 +7,6 @@ terraform {
 provider "local" {}
 
 resource "local_file" "foo" {
-  content = "foo!"
+  content  = "foo!"
   filename = "foo"
 }
