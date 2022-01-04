@@ -19,5 +19,5 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: github-comment hide -org ${{ inputs.org }} -repo ${{ inputs.repo }} -pr ${{ inputs.pr_number }} -token ${{ inputs.token }} -condition 'Comment.HasMeta && (Comment.Meta.SHA1 != Commit.SHA1 && Comment.Meta.Vars.target == "${{ inputs.target }}")'
+    - run: github-comment hide -org ${{ inputs.org }} -repo ${{ inputs.repo }} -pr ${{ inputs.pr_number }} -token ${{ inputs.token }} -condition 'Comment.HasMeta && (Comment.Meta.SHA1 != Commit.SHA1 && Comment.Target == "${{ inputs.target }}")'
       shell: bash

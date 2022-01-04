@@ -39,6 +39,8 @@ jobs:
 
       - name: Hide old plans
         uses: itkq/actions-tfcmt/hide-old-comments@main
+        env:
+          GITHUB_COMMENT_LOG_LEVEL: 'debug'
         with:
           org: itkq
           repo: ${{ github.event.repository.name }}
