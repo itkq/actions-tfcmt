@@ -14,12 +14,12 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Setup tfcmt
-        uses: itkq/actions-tfcmt/setup@main
+        uses: itkq/actions-tfcmt/setup@v1
 
       - run: tfcmt --version
 
       - name: Hide old plans
-        uses: itkq/actions-tfcmt/hide-old-comments@main
+        uses: itkq/actions-tfcmt/hide-old-comments@v1
         with:
           org: itkq
           repo: ${{ github.event.repository.name }}
