@@ -38,7 +38,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Hide old plans
-        uses: itkq/actions-tfcmt/hide-old-comments@main
+        uses: itkq/actions-tfcmt/hide-old-comments@v1
         env:
           GITHUB_COMMENT_LOG_LEVEL: 'debug'
         with:
